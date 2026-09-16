@@ -1,0 +1,11 @@
+# Machine-local state — must never be published.
+#
+# kb-path.txt holds the absolute path of *this* machine's knowledge base.
+# It is intentionally not part of the shipped manual.
+kb-path.txt
+kb-path*.txt
+
+# Editor / OS noise
+.DS_Store
+Thumbs.db
+*.swp

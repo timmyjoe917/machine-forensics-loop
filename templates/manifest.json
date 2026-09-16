@@ -1,0 +1,50 @@
+{
+  "$comment": "Machine-readable index. An agent reads this first and uses read_order to decide which documents to load. Keep it honest and current: a stale manifest is worse than an empty one.",
+  "schema": "machine-forensics-index/v1",
+  "machine": {
+    "host": "<HOST>",
+    "user": "<USER>",
+    "os": "<OS + build, e.g. Windows 10.0.26200 (x64)>",
+    "user_is_admin": null,
+    "privilege_note": "<what identity processes actually run as>"
+  },
+  "current_risk": {
+    "level": "unknown",
+    "summary": "<nothing established yet — this knowledge base was just created>",
+    "active_issues": []
+  },
+  "read_order": [
+    { "file": "README.md", "why": "index and write protocol", "when": "always" },
+    { "file": "01-verified-facts.md", "why": "established facts, to avoid re-deriving them", "when": "always" },
+    { "file": "03-system-mods.md", "why": "changes already made — read before mutating anything", "when": "always" },
+    { "file": "05-mistakes.md", "why": "mistakes already made here", "when": "always" },
+    { "file": "04-playbook.md", "why": "known symptoms and their fixes", "when": "matching symptom" },
+    { "file": "07-key-paths.md", "why": "paths, identifiers, log signatures", "when": "need a concrete value" }
+  ],
+  "structure": {
+    "shared_layer": ["README.md", "manifest.json", "00-principles.md", "01-verified-facts.md", "03-system-mods.md", "04-playbook.md", "05-mistakes.md", "07-key-paths.md", "references/"],
+    "per_agent_worklogs": { "<agent-name>": "<agent-name>/" },
+    "rule": "First-hand records go into your own directory. A conclusion every agent should know goes into the shared layer."
+  },
+  "invariants": {},
+  "test_path_rules": {
+    "$comment": "Fill this in when you learn it. Before ordering any escalation test, record: is the path already writable, and can the helper change its ACL. A failed grant can break the whole turn.",
+    "preconditions_for_an_escalation_test": [
+      "the path must NOT already be writable by the agent (otherwise the test proves nothing)",
+      "the path must be owned by the user (otherwise the helper cannot rewrite its ACL)",
+      "a failure can break the current turn — do not run the test in an important session"
+    ],
+    "safe_but_useless": [],
+    "dangerous_never_use": []
+  },
+  "noise_lines_to_ignore": [],
+  "artifacts": {},
+  "append_protocol": {
+    "worklog_location": "<agent-name>/",
+    "filename": "<YYYY-MM-DD>-<topic>.md",
+    "required_header": ["来源 (source agent)", "时间 (time)", "触发原因 (trigger)", "结论置信度 (confidence)"],
+    "required_tagging": "Distinguish 【已验证】/【推断】/【假设】 in the body; never write the last two as the first.",
+    "sync_obligation": "When you establish something every agent should know, update the shared layer (01 facts / 03 mods / 04 playbook / 05 mistakes / 07 paths / this manifest).",
+    "public_export": "Nothing in this knowledge base is published. Anything that does leave the machine passes references/privacy.md first."
+  }
+}
