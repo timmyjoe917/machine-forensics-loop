@@ -110,6 +110,24 @@ from another agent is a lead for the reader to verify, never a fact.
 On a machine with no knowledge base, Phase 5 creates one: copy `templates/` to the resolved path,
 rename the files into place, fill in what this session actually established, and write `kb-path.txt`.
 
+The rename is mechanical — the templates are named after their destinations:
+
+| Template | Becomes |
+|---|---|
+| `templates/README.md` | `<kb>/README.md` |
+| `templates/manifest.json` | `<kb>/manifest.json` |
+| `templates/01-verified-facts.md` | `<kb>/01-verified-facts.md` |
+| `templates/03-system-mods.md` | `<kb>/03-system-mods.md` |
+| `templates/04-playbook.md` | `<kb>/04-playbook.md` |
+| `templates/05-mistakes.md` | `<kb>/05-mistakes.md` |
+| `templates/07-key-paths.md` | `<kb>/07-key-paths.md` |
+| `templates/baseline-values.md` | `<kb>/references/baseline-values.md` |
+| `templates/worklog.md` | `<kb>/<agent-name>/<YYYY-MM-DD>-<topic>.md` |
+
+Also copy the manual's `00-principles.md` to `<kb>/00-principles.md` if you want the knowledge base
+readable on its own. **Do not copy `kb-path.txt` into the knowledge base** — it lives next to
+`SKILL.md` and points *at* the knowledge base.
+
 The correct starting content is mostly **empty but labelled**:
 
 - `01-verified-facts.md` — machine baseline that is trivially checkable, tagged 【已验证】
